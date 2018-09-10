@@ -1,25 +1,32 @@
+// import groovy.io.FileType;
+
 apply plugin: 'maven'
 apply plugin: 'java'
 apply plugin: 'eclipse'
 
 repositories {
-    maven {
-        url "https://libraries.minecraft.net/"
-    }
     mavenCentral()
+    jcenter()
 }
 
-group = 'net.minecraft'
+group = 'io.github.lightwayup' // To retain compatibility with Minecraft, use 'net.minecraft'
 archivesBaseName = 'launchwrapper'
-version = '1.12'
-sourceCompatibility = 1.6
+version = '1.0'
+// To retain compatibility with Minecraft, use version number
+// higher than 1.12 and change group to 'net.minecraft'
+sourceCompatibility = 1.8
 
 dependencies {
-    compile 'net.sf.jopt-simple:jopt-simple:4.5'
-    compile 'org.ow2.asm:asm-debug-all:5.0.3'
-    compile 'org.lwjgl.lwjgl:lwjgl:2.9.1'
-    compile 'org.apache.logging.log4j:log4j-core:2.0-beta9'
-    compile 'org.apache.logging.log4j:log4j-api:2.0-beta9'
+    compile 'net.sf.jopt-simple:jopt-simple:5.0.4'
+    compile 'org.ow2.asm:asm:6.2.1'
+    compile 'org.ow2.asm:asm-commons:6.2.1'
+    compile 'org.ow2.asm:asm-util:6.2.1'
+    compile 'org.ow2.asm:asm-tree:6.2.1'
+    compile 'org.ow2.asm:asm-analysis:6.2.1'
+    compile 'org.ow2.asm:asm-xml:6.2.1'
+    compile 'org.lwjgl.lwjgl:lwjgl:2.9.3'
+    compile 'org.apache.logging.log4j:log4j-core:2.11.1'
+    compile 'org.apache.logging.log4j:log4j-api:2.11.1'
 }
 
 task sourcesJar(type: Jar) {
@@ -32,6 +39,8 @@ artifacts {
     archives sourcesJar
 }
 
+// Enable only if you want to deploy artifact
+/*
 def repoDir = new File(projectDir, "repo")
 repoDir.mkdirs()
 
@@ -42,14 +51,14 @@ uploadArchives {
 
             pom.project {
                 description 'Minecraft LegacyLauncher'
-                url 'http://github.com/Mojang/LegacyLauncher'
+                url 'https://github.com/Mojang/LegacyLauncher'
             }
         }
     }
 
     doLast {
-        // Purge all annoying files that arent needed
-        repoDir.traverse(type: groovy.io.FileType.FILES, nameFilter: ~/.*\.(xml(?:\.sha1)?|md5)$/) {
+        // Purge all annoying files that aren't needed
+        repoDir.traverse(type: FileType.FILES, nameFilter: ~/.*\.(xml(?:\.sha1)?|md5)$/) {
             it.delete()
         }
     }
@@ -58,3 +67,4 @@ uploadArchives {
 clean << {
     repoDir.deleteDir()
 }
+*/

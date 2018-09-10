@@ -3,10 +3,13 @@ package net.minecraft.launchwrapper.injector;
 import net.minecraft.launchwrapper.IClassTransformer;
 import net.minecraft.launchwrapper.Launch;
 
-import javax.swing.*;
+import javax.swing.JPanel;
 import java.applet.Applet;
 import java.applet.AppletStub;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Frame;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.lang.reflect.Constructor;
@@ -18,6 +21,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
+@SuppressWarnings("deprecation") // Not a good idea, Applets will be removed from Java very soon!
 public class AlphaVanillaTweakInjector implements IClassTransformer {
     public AlphaVanillaTweakInjector() {
     }
@@ -60,7 +64,7 @@ public class AlphaVanillaTweakInjector implements IClassTransformer {
     }
 
     private static void startMinecraft(final Applet applet, String[] args) {
-        final Map<String, String> params = new HashMap<String, String>();
+        final Map<String, String> params = new HashMap<>();
 
         // Extract params
         String name = "Player" + System.currentTimeMillis() % 1000;
@@ -92,10 +96,7 @@ public class AlphaVanillaTweakInjector implements IClassTransformer {
             }
         });
 
-
         class LauncherFake extends Applet implements AppletStub {
-            private static final long serialVersionUID = 1L;
-
             public void appletResize(int width, int height) {
                 // Actually empty as well
             }
@@ -108,7 +109,7 @@ public class AlphaVanillaTweakInjector implements IClassTransformer {
             @Override
             public URL getDocumentBase() {
                 try {
-                    return new URL("http://www.minecraft.net/game/");
+                    return new URL("https://minecraft.net/en-us/");
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 }
@@ -118,7 +119,7 @@ public class AlphaVanillaTweakInjector implements IClassTransformer {
             @Override
             public URL getCodeBase() {
                 try {
-                    return new URL("http://www.minecraft.net/game/");
+                    return new URL("https://minecraft.net/en-us/");
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 }
@@ -150,11 +151,7 @@ public class AlphaVanillaTweakInjector implements IClassTransformer {
         applet.init();
         applet.start();
 
-        Runtime.getRuntime().addShutdownHook(new Thread() {
-            public void run() {
-                applet.stop();
-            }
-        });
+        Runtime.getRuntime().addShutdownHook(new Thread(applet::stop));
 
         VanillaTweakInjector.loadIconsOnFrames();
     }

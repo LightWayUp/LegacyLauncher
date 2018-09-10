@@ -7,10 +7,13 @@ import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.Label;
 import org.objectweb.asm.Type;
-import org.objectweb.asm.tree.*;
+import org.objectweb.asm.tree.ClassNode;
+import org.objectweb.asm.tree.FieldNode;
+import org.objectweb.asm.tree.MethodNode;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
+import java.awt.Frame;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -18,7 +21,9 @@ import java.nio.ByteBuffer;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.objectweb.asm.Opcodes.*;
+import static org.objectweb.asm.Opcodes.ACC_STATIC;
+import static org.objectweb.asm.Opcodes.INVOKESTATIC;
+import static org.objectweb.asm.Opcodes.PUTSTATIC;
 
 public class VanillaTweakInjector implements IClassTransformer {
     public VanillaTweakInjector() {
@@ -58,13 +63,17 @@ public class VanillaTweakInjector implements IClassTransformer {
             }
         }
 
+        if (workDirNode == null) {
+            throw new RuntimeException("workDirNode is null!");
+        }
+
         // Prepare our injection code
         final MethodNode injectedMethod = new MethodNode();
         final Label label = new Label();
         injectedMethod.visitLabel(label);
         injectedMethod.visitLineNumber(9001, label); // Linenumber which shows up in the stacktrace
         // Call the method below
-        injectedMethod.visitMethodInsn(INVOKESTATIC, "net/minecraft/launchwrapper/injector/VanillaTweakInjector", "inject", "()Ljava/io/File;");
+        injectedMethod.visitMethodInsn(INVOKESTATIC, "net/minecraft/launchwrapper/injector/VanillaTweakInjector", "inject", "()Ljava/io/File;", false);
         // Store the result in the workDir variable.
         injectedMethod.visitFieldInsn(PUTSTATIC, "net/minecraft/client/Minecraft", workDirNode.name, "Ljava/io/File;");
 
@@ -100,7 +109,7 @@ public class VanillaTweakInjector implements IClassTransformer {
             Frame[] frames = Frame.getFrames();
 
             if (frames != null) {
-                final List<Image> icons = Arrays.<Image>asList(ImageIO.read(smallIcon), ImageIO.read(bigIcon));
+                final List<Image> icons = Arrays.asList(ImageIO.read(smallIcon), ImageIO.read(bigIcon));
 
                 for (Frame frame : frames) {
                     try {
