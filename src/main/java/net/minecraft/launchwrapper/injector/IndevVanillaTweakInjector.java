@@ -79,7 +79,10 @@ public class IndevVanillaTweakInjector implements IClassTransformer {
                     }
 
                     instruction = iterator.next();
+                    /* Thanks to rakion99 for the code reference!
+                     * Referenced code start */
                     runMethod.instructions.insertBefore(instruction, new MethodInsnNode(INVOKESTATIC, "net/minecraft/launchwrapper/injector/IndevVanillaTweakInjector", "inject", "()Ljava/io/File;", false));
+                    /* Referenced code end */
                     runMethod.instructions.insertBefore(instruction, new VarInsnNode(ASTORE, 2));
                 }
             }

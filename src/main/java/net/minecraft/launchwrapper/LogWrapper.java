@@ -22,10 +22,13 @@ public class LogWrapper {
         log.myLog = to;
     }
 
+    /* Thanks to masl123 for the code reference!
+     * Referenced code start */
     public static void retarget(java.util.logging.Logger to) {
         log.myLog = LogManager.getLogger();
         to.addHandler(new Log4JHandler(log.myLog));
     }
+    /* Referenced code end */
 
     public static void log(String logChannel, Level level, String format, Object... data) {
         makeLog(logChannel);
@@ -79,6 +82,8 @@ public class LogWrapper {
         LogManager.getLogger(logChannel);
     }
 
+    /* Thanks to masl123 for the code reference!
+     * Referenced code start */
     private static class Log4JHandler extends Handler {
         private Logger logger;
 
@@ -113,4 +118,5 @@ public class LogWrapper {
             return Level.OFF;
         }
     }
+    /* Referenced code end */
 }

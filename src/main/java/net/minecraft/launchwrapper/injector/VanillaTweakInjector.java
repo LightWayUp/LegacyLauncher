@@ -73,7 +73,10 @@ public class VanillaTweakInjector implements IClassTransformer {
         injectedMethod.visitLabel(label);
         injectedMethod.visitLineNumber(9001, label); // Linenumber which shows up in the stacktrace
         // Call the method below
+        /* Thanks to rakion99 for the code reference!
+         * Referenced code start */
         injectedMethod.visitMethodInsn(INVOKESTATIC, "net/minecraft/launchwrapper/injector/VanillaTweakInjector", "inject", "()Ljava/io/File;", false);
+        /* Referenced code end */
         // Store the result in the workDir variable.
         injectedMethod.visitFieldInsn(PUTSTATIC, "net/minecraft/client/Minecraft", workDirNode.name, "Ljava/io/File;");
 

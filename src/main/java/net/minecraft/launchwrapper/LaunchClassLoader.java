@@ -64,7 +64,10 @@ public class LaunchClassLoader extends URLClassLoader {
         addClassLoaderExclusion("sun.");
         addClassLoaderExclusion("org.lwjgl.");
         addClassLoaderExclusion("org.apache.logging.");
+        /* Thanks to thiakil for the code reference!
+         * Referenced code start */
         addClassLoaderExclusion("org.fusesource.jansi.");
+        /* Reference code end */
         addClassLoaderExclusion("net.minecraft.launchwrapper.");
 
         // transformer exclusions
@@ -147,9 +150,12 @@ public class LaunchClassLoader extends URLClassLoader {
             final String packageName = lastDot == -1 ? "" : untransformedName.substring(0, lastDot);
             final String fileName = untransformedName.replace('.', '/').concat(".class");
             URLConnection urlConnection = findCodeSourceConnectionFor(fileName);
+            /* Thanks to thiakil for the code reference!
+             * Referenced code start */
             if (urlConnection == null) {
                 throw new ClassNotFoundException(name);
             }
+            /* Referenced code end */
 
             CodeSigner[] signers = null;
 
@@ -165,6 +171,8 @@ public class LaunchClassLoader extends URLClassLoader {
                         Package pkg = getPackage(packageName);
                         getClassBytes(untransformedName);
                         signers = entry.getCodeSigners();
+                        /* Thanks to thiakil for the code reference!
+                         * Referenced code start */
                         if (pkg == null) {
                             definePackage(packageName, manifest, jarURLConnection.getJarFileURL());
                         } else {
@@ -183,9 +191,12 @@ public class LaunchClassLoader extends URLClassLoader {
                         LogWrapper.severe("The URL %s is defining elements for sealed path %s", urlConnection.getURL(), packageName);
                     }
                 }
+                /* Referenced code end */
             }
 
             final byte[] transformedClass = runTransformers(untransformedName, transformedName, getClassBytes(untransformedName));
+            /* Thanks to thiakil and Gogume1er for the code reference!
+             * Referenced code start */
             if (transformedClass != null) {
                 if (DEBUG_SAVE) {
                     saveTransformedClass(transformedClass, transformedName);
@@ -198,23 +209,33 @@ public class LaunchClassLoader extends URLClassLoader {
             } else {
                 throw new ClassNotFoundException(name);
             }
+            /* Referenced code end */
         } catch (Throwable e) {
             invalidClasses.add(name);
             if (DEBUG) {
                 LogWrapper.log(Level.TRACE, e, "Exception encountered attempting classloading of %s", name);
+                /* Thanks to Gogume1er for the code reference!
+                 * Referenced code start */
                 LogManager.getLogger("LaunchWrapper").log(Level.ERROR, "Exception encountered attempting classloading of {}", name, e);
+                /* Referenced code end */
             }
+            /* Thanks to thiakil and Gogume1er for the code reference!
+             * Referenced code start */
             if (e instanceof ClassNotFoundException) {
                 throw (ClassNotFoundException)e;
             }
+            /* Referenced code end */
             throw new ClassNotFoundException(name, e);
         }
     }
 
     private void saveTransformedClass(final byte[] data, final String transformedName) {
+        /* Thanks to thiakil and Gogume1er for the code reference!
+         * Referenced code start */
         if (tempFolder == null || data == null) {
             return;
         }
+        /* Referenced code end */
 
         final File outFile = new File(tempFolder, transformedName.replace('.', File.separatorChar) + ".class");
         final File outDir = outFile.getParentFile();

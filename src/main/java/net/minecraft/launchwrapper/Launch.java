@@ -30,6 +30,8 @@ public class Launch {
 
     public static LaunchClassLoader classLoader;
 
+    /* Thanks to heni123321 for the code reference!
+    * Referenced code start */
     private Launch() {
         final ClassLoader thisClassLoader = this.getClass().getClassLoader();
         URL[] urls;
@@ -61,6 +63,7 @@ public class Launch {
         }
         return urls;
     }
+    /* Referenced code end */
 
     private void launch(String[] args) {
         final OptionParser parser = new OptionParser();
@@ -105,6 +108,8 @@ public class Launch {
             // It is here to allow tweakers to "push" new tweak classes onto the 'stack' of
             // tweakers to evaluate allowing for cascaded discovery and injection of tweakers
             do {
+                /* Thanks to sk89q and masl123 for the code reference!
+                 * Referenced code start */
                 while(!tweakClassNames.isEmpty()){
                     final String tweakName = tweakClassNames.remove(0);
                     // Safety check - don't reprocess something we've already visited
@@ -126,7 +131,10 @@ public class Launch {
                         primaryTweaker = tweaker;
                     }
                 }
+                /* Referenced code end */
 
+                /* Thanks to sk89q and masl123 for the code reference!
+                 * Referenced code start */
                 // Now, iterate all the tweakers we just instantiated
                 while (!tweakers.isEmpty()) {
                     final ITweaker tweaker = tweakers.remove(0);
@@ -135,6 +143,7 @@ public class Launch {
                     tweaker.injectIntoClassLoader(classLoader);
                     allTweakers.add(tweaker);
                 }
+                /* Referenced code end */
                 // continue around the loop until there's no tweak classes
             } while (!tweakClassNames.isEmpty());
 
