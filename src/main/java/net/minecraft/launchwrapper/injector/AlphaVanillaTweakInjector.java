@@ -27,11 +27,11 @@ public class AlphaVanillaTweakInjector implements IClassTransformer {
     }
 
     @Override
-    public byte[] transform(final String name, final String transformedName, final byte[] bytes) {
+    public byte[] transform(final String name, final String transformedName, final byte... bytes) {
         return bytes;
     }
 
-    public static void main(String[] args) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+    public static void main(final String... args) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
         Class<?> clazz;
 
         try {
@@ -63,7 +63,7 @@ public class AlphaVanillaTweakInjector implements IClassTransformer {
         startMinecraft((Applet) object, args);
     }
 
-    private static void startMinecraft(final Applet applet, String[] args) {
+    private static void startMinecraft(final Applet applet, final String... args) {
         final Map<String, String> params = new HashMap<>();
 
         // Extract params

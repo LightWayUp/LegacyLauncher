@@ -26,7 +26,7 @@ public class IndevVanillaTweakInjector implements IClassTransformer {
     }
 
     @Override
-    public byte[] transform(final String name, final String transformedName, final byte[] bytes) {
+    public byte[] transform(final String name, final String transformedName, final byte... bytes) {
         if (bytes == null) {
             return null;
         }

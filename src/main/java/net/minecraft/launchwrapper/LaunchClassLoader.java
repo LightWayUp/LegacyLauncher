@@ -55,7 +55,7 @@ public class LaunchClassLoader extends URLClassLoader {
     private static final boolean DEBUG_SAVE = DEBUG && Boolean.parseBoolean(System.getProperty("legacy.debugClassLoadingSave", "false"));
     private static File tempFolder = null;
 
-    public LaunchClassLoader(URL[] sources) {
+    public LaunchClassLoader(URL... sources) {
         super(sources, null);
         this.sources = new ArrayList<>(Arrays.asList(sources));
 
@@ -199,7 +199,7 @@ public class LaunchClassLoader extends URLClassLoader {
              * Referenced code start */
             if (transformedClass != null) {
                 if (DEBUG_SAVE) {
-                    saveTransformedClass(transformedClass, transformedName);
+                    saveTransformedClass(transformedName, transformedClass);
                 }
 
                 final CodeSource codeSource = new CodeSource(urlConnection.getURL(), signers);
@@ -229,7 +229,7 @@ public class LaunchClassLoader extends URLClassLoader {
         }
     }
 
-    private void saveTransformedClass(final byte[] data, final String transformedName) {
+    private void saveTransformedClass(final String transformedName, final byte... data) {
         /* Thanks to thiakil and Gogume1er for the code reference!
          * Referenced code start */
         if (tempFolder == null || data == null) {
@@ -308,7 +308,7 @@ public class LaunchClassLoader extends URLClassLoader {
         return null;
     }
 
-    private byte[] runTransformers(final String name, final String transformedName, byte[] basicClass) {
+    private byte[] runTransformers(final String name, final String transformedName, byte... basicClass) {
         if (DEBUG_FINER) {
             LogWrapper.finest("Beginning transform of {%s (%s)} Start Length: %d", name, transformedName, (basicClass == null ? 0 : basicClass.length));
             for (final IClassTransformer transformer : transformers) {

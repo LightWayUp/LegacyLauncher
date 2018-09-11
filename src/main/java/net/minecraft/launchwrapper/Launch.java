@@ -24,7 +24,7 @@ public class Launch {
     public static File assetsDir;
     public static Map<String,Object> blackboard;
 
-    public static void main(String[] args) {
+    public static void main(final String... args) {
         new Launch().launch(args);
     }
 
@@ -65,7 +65,7 @@ public class Launch {
     }
     /* Referenced code end */
 
-    private void launch(String[] args) {
+    private void launch(String... args) {
         final OptionParser parser = new OptionParser();
         parser.allowsUnrecognizedOptions();
 
