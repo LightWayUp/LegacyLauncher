@@ -7,7 +7,7 @@ Mojang is no longer active on LegacyLauncher development. However, many Minecraf
 This fork incorporates improvements from almost all other forks that stick to the original intention of LegacyLauncher. You can use this fork if you don't like the outdated LegacyLauncher from Mojang, or you want to play old Minecraft versions or use mods with newer Java versions.
 
 ## Compatibility
-Support for Java 9 and above has been added, and minimum requirement is raised to Java 8.  
+Support for Java 9 and above has been added, and minimum requirement is raised to Java 9.  
 Once compiled with "group" and "version" set properly in [build.gradle](/build.gradle), the output "launchwrapper-X.Y.jar" (where X.Y is the version of LegacyLauncher) is compatible with Minecraft.
 
 ## Installation
