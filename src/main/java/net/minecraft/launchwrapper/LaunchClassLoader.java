@@ -168,7 +168,7 @@ public class LaunchClassLoader extends URLClassLoader {
                         final Manifest manifest = jarFile.getManifest();
                         final JarEntry entry = jarFile.getJarEntry(fileName);
 
-                        Package pkg = getPackage(packageName);
+                        Package pkg = this.getDefinedPackage(packageName);
                         getClassBytes(untransformedName);
                         signers = entry.getCodeSigners();
                         /* Thanks to thiakil for the code reference!
@@ -184,7 +184,7 @@ public class LaunchClassLoader extends URLClassLoader {
                         }
                     }
                 } else {
-                    Package pkg = getPackage(packageName);
+                    Package pkg = this.getDefinedPackage(packageName);
                     if (pkg == null) {
                         definePackage(packageName, null, null, null, null, null, null, null);
                     } else if (pkg.isSealed()) {

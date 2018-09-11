@@ -14,7 +14,7 @@ archivesBaseName = 'launchwrapper'
 version = '1.0'
 // To retain compatibility with Minecraft, use version number
 // higher than 1.12 and change group to 'net.minecraft'
-sourceCompatibility = 1.8
+sourceCompatibility = 9
 
 dependencies {
     compile 'net.sf.jopt-simple:jopt-simple:5.0.4'
