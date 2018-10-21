@@ -1,4 +1,4 @@
-# LegacyLauncher ![Java 9 and above](https://img.shields.io/badge/Java%20compatibility-8%20and%20above-f80000.svg?longCache=true&style=flat-square) [![View latest release](https://img.shields.io/badge/version-latest-36b030.svg?longCache=true&style=flat-square)](https://github.com/LightWayUp/LegacyLauncher/releases/latest)
+# LegacyLauncher ![Java 9 and above](https://img.shields.io/badge/Java%20compatibility-9%20and%20above-f80000.svg?longCache=true&style=flat-square) [![View latest release](https://img.shields.io/badge/version-latest-36b030.svg?longCache=true&style=flat-square)](https://github.com/LightWayUp/LegacyLauncher/releases/latest)
 
 > Hacky code to launch our old versions from the new launcher!
 
